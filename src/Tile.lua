@@ -27,6 +27,24 @@ function Tile:init(x, y, color, variety, shiny)
     self.color = color
     self.variety = variety
     self.shiny = shiny
+    self.shineX = -20
+    self.shineY = -20
+    self.transitionAlpha = 0
+
+    if self.shiny then
+        self.shine = Timer.every(2, function()
+            self.shineX = -20
+            self.shineY = -20
+            Timer.tween(0.25, {
+                [self] = {shineX = 0, shineY = 0, transitionAlpha = 255}
+            })
+            :finish(function() 
+                Timer.tween(0.25, {
+                    [self] = {shineX = 20, shineY = 20, transitionAlpha = 0}
+                })
+            end)
+        end)
+    end
 end
 
 function Tile:render(x, y)
@@ -40,4 +58,8 @@ function Tile:render(x, y)
     love.graphics.setColor(255, 255, 255, 255)
     love.graphics.draw(gTextures['main'], gFrames['tiles'][self.color][self.variety],
         self.x + x, self.y + y)
+    
+    -- draw shiny effect
+    love.graphics.setColor(255, 255, 255, self.transitionAlpha)
+    love.graphics.draw(gTextures['shine'], self.x + x + self.shineX, self.y + y + self.shineY)
 end
