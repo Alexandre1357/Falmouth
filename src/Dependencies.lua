@@ -60,7 +60,8 @@ gFrames = {
     
     -- divided into sets for each tile type in this game, instead of one large
     -- table of Quads
-    ['tiles'] = GenerateTileQuads(gTextures['main'])
+    ['tiles'] = GenerateTileQuads(gTextures['main']),
+    ['shiny'] = GenerateShineQuads(gTextures['shine'])
 }
 
 -- this time, we're keeping our fonts in a global table for readability

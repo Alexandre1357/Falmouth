@@ -247,9 +247,14 @@ function Board:getFallingTiles()
 
             -- if the tile is nil, we need to add a new one
             if not tile then
+                if math.random(10) == 1 then
+                    self.shiny = true
+                else
+                    self.shiny = false
+                end
 
                 -- new tile with random color and variety
-                local tile = Tile(x, y, math.random(18), math.random(self.variety), false)
+                local tile = Tile(x, y, math.random(18), math.random(self.variety), self.shiny)
                 tile.y = -32
                 self.tiles[y][x] = tile
 
